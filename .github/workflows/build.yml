@@ -7,19 +7,36 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Build with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1
-        id: buildozer
-        with:
-          buildozer_version: stable
-          command: buildozer android debug
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
 
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: digisave-apk
-          path: ${{ steps.buildozer.outputs.filename }}
+    - name: Install system dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y \
+          git zip unzip openjdk-17-jdk python3-pip autoconf \
+          libtool pkg-config zlib1g-dev libncurses5-dev \
+          libncursesw5-dev libreadline-dev libsqlite3-dev \
+          libssl-dev libffi-dev build-essential ccache
+
+    - name: Install Buildozer and Cython
+      run: |
+        pip install --upgrade pip
+        pip install --upgrade buildozer cython
+
+    - name: Build APK with Buildozer
+      run: |
+        buildozer -v android debug
+
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: digisave-apk
+        path: bin/*.apk
