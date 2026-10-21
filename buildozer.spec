@@ -9,6 +9,12 @@ package.name = digisave
 # (str) Package domain (needed for android packaging)
 package.domain = org.jcorelabs
 
+# (str) Source directory where your source files live
+source.dir = .
+
+# (str) Application version
+version = 0.1
+
 # (str) Source files to include (let it include py, kv, and database files)
 source.include_exts = py,png,jpg,kv,sql,db
 
