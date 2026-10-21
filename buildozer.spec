@@ -35,3 +35,9 @@ android.archs = arm64-v8a
 
 # (int) Log level (0 = error only, 1 = info, 2 = debug)
 log_level = 2
+
+# (int) Target Android API, should be as high as possible.
+android.api = 33
+
+# (int) Minimum API your APK will support
+android.minapi = 21
