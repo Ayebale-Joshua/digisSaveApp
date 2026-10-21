@@ -40,9 +40,3 @@ jobs:
       with:
         name: digisave-apk
         path: bin/*.apk
-        
-    - name: Build APK with Buildozer
-      run: |
-        # Automatically accept Android SDK licenses
-        yes | sdkmanager --licenses || true
-        buildozer -v android debug
