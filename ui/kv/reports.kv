@@ -1,0 +1,87 @@
+<ReportsScreen>:
+    name: 'reports'
+    canvas.before:
+        Color:
+            rgba: 0.95, 0.96, 0.98, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 15
+
+        # Header Bar
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+            canvas.before:
+                Color:
+                    rgba: 0.10, 0.21, 0.36, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            padding: [15, 0]
+
+            Label:
+                text: "Reports & File Exports"
+                font_size: '18sp'
+                bold: True
+                color: 1, 1, 1, 1
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+
+            Button:
+                text: "Back to Dashboard"
+                size_hint_x: None
+                width: '150dp'
+                background_color: 0.25, 0.35, 0.45, 1
+                background_normal: ''
+                on_release: root.manager.current = 'dashboard'
+
+        # Export Controls Area
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 20
+            spacing: 20
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [8,]
+
+            Label:
+                text: "Generate Summary Exports for Meeting Session #1"
+                font_size: '18sp'
+                bold: True
+                color: 0.10, 0.21, 0.36, 1
+                size_hint_y: None
+                height: '40dp'
+
+            Button:
+                text: "EXPORT MEETING SUMMARY TO A4 PDF"
+                size_hint_y: None
+                height: '50dp'
+                bold: True
+                background_color: 0.17, 0.42, 0.69, 1
+                background_normal: ''
+                on_release: root.export_pdf()
+
+            Button:
+                text: "EXPORT MEETING TRANSACTIONS TO EXCEL (.XLSX)"
+                size_hint_y: None
+                height: '50dp'
+                bold: True
+                background_color: 0.17, 0.56, 0.30, 1
+                background_normal: ''
+                on_release: root.export_excel()
+
+            Label:
+                id: status_label
+                text: ""
+                font_size: '14sp'
+                color: 0.2, 0.6, 0.2, 1

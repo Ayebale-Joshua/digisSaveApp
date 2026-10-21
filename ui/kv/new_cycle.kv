@@ -1,0 +1,116 @@
+<NewCycleScreen>:
+    name: 'new_cycle'
+    canvas.before:
+        Color:
+            rgba: 0.95, 0.96, 0.98, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 15
+
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+            canvas.before:
+                Color:
+                    rgba: 0.10, 0.21, 0.36, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            padding: [15, 0]
+
+            Label:
+                text: "Start New Cycle - Setup Wizard & Member Rollover"
+                font_size: '18sp'
+                bold: True
+                color: 1, 1, 1, 1
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+
+            Button:
+                text: "Back to Dashboard"
+                size_hint_x: None
+                width: '150dp'
+                background_color: 0.25, 0.35, 0.45, 1
+                background_normal: ''
+                on_release: root.manager.current = 'dashboard'
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: 20
+            spacing: 15
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [8,]
+
+            Label:
+                text: "Configure Cycle Baseline Rules"
+                font_size: '16sp'
+                bold: True
+                color: 0.10, 0.21, 0.36, 1
+                size_hint_y: None
+                height: '30dp'
+
+            GridLayout:
+                cols: 4
+                spacing: 15
+                size_hint_y: None
+                height: '120dp'
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label:
+                        text: "Cycle Name"
+                        color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        id: txt_cycle_name
+                        text: "Cycle 2026-2027"
+                        multiline: False
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label:
+                        text: "Start Date"
+                        color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        id: txt_start_date
+                        text: "2026-11-01"
+                        multiline: False
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label:
+                        text: "Share Value (UGX)"
+                        color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        id: txt_share_value
+                        text: "2000"
+                        multiline: False
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    Label:
+                        text: "Welfare Amount (UGX)"
+                        color: 0.3, 0.3, 0.3, 1
+                    TextInput:
+                        id: txt_welfare_amount
+                        text: "5000"
+                        multiline: False
+
+            Button:
+                text: "INITIALIZE NEW CYCLE & ROLL OVER ACTIVE MEMBERS"
+                size_hint_y: None
+                height: '50dp'
+                bold: True
+                background_color: 0.25, 0.35, 0.45, 1
+                background_normal: ''
+                on_release: root.create_cycle()

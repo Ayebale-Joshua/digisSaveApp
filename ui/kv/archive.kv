@@ -1,0 +1,119 @@
+<ArchiveScreen>:
+    name: 'archive'
+    canvas.before:
+        Color:
+            rgba: 0.95, 0.96, 0.98, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 15
+
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+            canvas.before:
+                Color:
+                    rgba: 0.10, 0.21, 0.36, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            padding: [15, 0]
+
+            Label:
+                text: "Cycles Archive - Historical Records"
+                font_size: '18sp'
+                bold: True
+                color: 1, 1, 1, 1
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+
+            Button:
+                text: "Back to Dashboard"
+                size_hint_x: None
+                width: '150dp'
+                background_color: 0.25, 0.35, 0.45, 1
+                background_normal: ''
+                on_release: root.manager.current = 'dashboard'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 15
+
+            # Left Pane: List of Past Cycles
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_x: 0.35
+                padding: 10
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [8,]
+
+                Label:
+                    text: "Select Operating Cycle"
+                    font_size: '16sp'
+                    bold: True
+                    color: 0.10, 0.21, 0.36, 1
+                    size_hint_y: None
+                    height: '30dp'
+
+                ScrollView:
+                    BoxLayout:
+                        id: cycles_list_container
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: self.minimum_height
+                        spacing: 8
+
+            # Right Pane: Cycle Details / Records Drill-down
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_x: 0.65
+                padding: 10
+                spacing: 10
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [8,]
+
+                Label:
+                    id: drilldown_title_label
+                    text: "Select a cycle from the left to view records."
+                    font_size: '16sp'
+                    bold: True
+                    color: 0.10, 0.21, 0.36, 1
+                    size_hint_y: None
+                    height: '30dp'
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: '40dp'
+                    spacing: 10
+                    Button:
+                        text: "Members"
+                        on_release: root.show_drilldown('members')
+                    Button:
+                        text: "Savings"
+                        on_release: root.show_drilldown('savings')
+                    Button:
+                        text: "Loans"
+                        on_release: root.show_drilldown('loans')
+
+                ScrollView:
+                    BoxLayout:
+                        id: drilldown_content_container
+                        orientation: 'vertical'
+                        size_hint_y: None
+                        height: self.minimum_height
+                        spacing: 5
