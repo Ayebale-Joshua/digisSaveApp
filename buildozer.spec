@@ -12,14 +12,13 @@ package.domain = org.jcorelabs
 # (str) Source code where the main.py lives
 source.dir = .
 
-# (list) Source files to include (let it include py, kv, database, and image files)
+# (list) Source files to include
 source.include_exts = py,png,jpg,kv,sql,db
 
 # (str) Application versioning
 version = 0.1
 
 # (list) Application requirements
-# Explicitly pin python3 and hostpython3 matching the build environment, along with your dependencies
 requirements = python3,kivy,sqlite3
 
 # (str) Supported orientations (landscape optimized for your tablet workflow)
@@ -28,10 +27,10 @@ orientation = landscape
 # (list) Permissions
 android.permissions = WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
 
-# (bool) Automatically accept Android SDK license agreements to prevent headless build halts
+# (bool) Automatically accept Android SDK license agreements
 android.accept_sdk_license = True
 
-# (int) Target Android API, should be stable
+# (int) Target Android API
 android.api = 33
 
 # (int) Minimum API your APK will support
