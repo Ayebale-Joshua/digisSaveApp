@@ -12,35 +12,16 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
+    - name: Build with Buildozer
+      uses: Android-CI/buildozer-action@v3
+      id: buildozer
       with:
-        python-version: '3.10'
-
-    - name: Install system dependencies
-      run: |
-        sudo apt update
-        sudo apt install -y \
-          git zip unzip openjdk-17-jdk python3-pip autoconf \
-          libtool pkg-config zlib1g-dev libncurses5-dev \
-          libncursesw5-dev libreadline-dev libsqlite3-dev \
-          libssl-dev libffi-dev build-essential ccache
-
-    - name: Install Buildozer and Cython
-      run: |
-        pip install --upgrade pip
-        pip install --upgrade buildozer cython
-
-    - name: Clear old buildozer cache locks
-      run: |
-        rm -rf .buildozer/android/platform/build-*
-
-    - name: Build APK with Buildozer
-      run: |
-        buildozer -v android debug
+        bazel: false
+        buildozer_version: stable
+        command: buildozer -v android debug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
         name: digisave-apk
-        path: bin/*.apk
+        path: ${{ steps.buildozer.outputs.filename }}
