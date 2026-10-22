@@ -12,45 +12,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
+    - name: Build with Buildozer
+      uses: ArtemSBulgakov/buildozer-action@v1
+      id: buildozer
       with:
-        python-version: '3.10'
-
-    - name: Install system dependencies
-      run: |
-        sudo apt update
-        sudo apt install -y \
-          git zip unzip openjdk-17-jdk python3-pip autoconf \
-          libtool pkg-config zlib1g-dev libncurses5-dev \
-          libncursesw5-dev libreadline-dev libsqlite3-dev \
-          libssl-dev libffi-dev build-essential ccache
-
-    - name: Install Buildozer and Cython
-      run: |
-        pip install --upgrade pip
-        pip install --upgrade buildozer cython
-
-    - name: Build APK with Buildozer
-      run: |
-        # Pre-create the android SDK directory structure so sdkmanager can be accessed
-        mkdir -p ~/.buildozer/android/platform/android-sdk
-        
-        # Run buildozer once to let it download the commandline tools, allowing us to accept licenses
-        yes | buildozer -v android debug || true
-        
-        # If licenses were the blocker, accept them globally across the SDK toolchain
-        if [ -d "$HOME/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin" ]; then
-          yes | $HOME/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses || true
-        elif [ -d "$HOME/.buildozer/android/platform/android-sdk/tools/bin" ]; then
-          yes | $HOME/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager --licenses || true
-        fi
-
-        # Run the final build command cleanly
-        buildozer -v android debug
+        buildozer_version: stable
+        command: buildozer -v android debug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
         name: digisave-apk
-        path: bin/*.apk
+        path: ${{ steps.buildozer.outputs.filename }}
