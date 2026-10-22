@@ -19,7 +19,8 @@ source.include_exts = py,png,jpg,kv,sql,db
 version = 0.1
 
 # (list) Application requirements
-requirements = python3,kivy,sqlite3
+# Note: sqlite3 is part of Python's standard library and should not be listed here to prevent build crashes
+requirements = python3,kivy
 
 # (str) Supported orientations (landscape optimized for your tablet workflow)
 orientation = landscape
