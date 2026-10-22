@@ -33,6 +33,20 @@ jobs:
 
     - name: Build APK with Buildozer
       run: |
+        # Pre-create the android SDK directory structure so sdkmanager can be accessed
+        mkdir -p ~/.buildozer/android/platform/android-sdk
+        
+        # Run buildozer once to let it download the commandline tools, allowing us to accept licenses
+        yes | buildozer -v android debug || true
+        
+        # If licenses were the blocker, accept them globally across the SDK toolchain
+        if [ -d "$HOME/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin" ]; then
+          yes | $HOME/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses || true
+        elif [ -d "$HOME/.buildozer/android/platform/android-sdk/tools/bin" ]; then
+          yes | $HOME/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager --licenses || true
+        fi
+
+        # Run the final build command cleanly
         buildozer -v android debug
 
     - name: Upload APK Artifact
